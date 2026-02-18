@@ -21,7 +21,4 @@ app.get("/", (req, res) => {
   res.send("Campus Notes API is running");
 });
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-});
+export default app;
