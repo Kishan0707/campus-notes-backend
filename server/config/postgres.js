@@ -1,4 +1,3 @@
-// postgres.js
 import dotenv from "dotenv";
 dotenv.config();
 import pkg from "pg";
@@ -10,7 +9,7 @@ if (!process.env.DATABASE_URL) {
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: true },
+  ssl: { rejectUnauthorized: false },
 });
 
 pool
