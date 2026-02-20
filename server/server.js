@@ -6,7 +6,7 @@ import notesRoutes from "./routes/notesRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import bookmarksRoutes from "./routes/bookmarksRoutes.js";
 import pool from "./config/postgres.js";
-
+import userRoutes from "./routes/profileRoutes.js";
 const app = express();
 
 app.use(cors());
@@ -16,6 +16,7 @@ app.use("/api/notes", notesRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/bookmarks", bookmarksRoutes);
 app.use("/uploads", express.static("uploads"));
+app.use("/api/users", userRoutes);
 
 app.get("/", (req, res) => {
   res.send("Campus Notes API is running");
