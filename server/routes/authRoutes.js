@@ -7,12 +7,13 @@ const router = express.Router();
 /* ================= REGISTER ================= */
 router.post("/register", async (req, res) => {
   try {
-    const { name, email, password, role } = req.body;
+    const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
       return res.status(400).json({ error: "All fields are required" });
     }
 
+    // 🔍 check email
     const checkResult = await pool.query(
       "SELECT id FROM users WHERE email = $1",
       [email],
@@ -23,11 +24,11 @@ router.post("/register", async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const userRole = role || "student";
 
+    // ➕ insert user
     await pool.query(
-      "INSERT INTO users (name, email, password, role) VALUES ($1, $2, $3, $4)",
-      [name, email, hashedPassword, userRole],
+      "INSERT INTO users (name, email, password) VALUES ($1, $2, $3)",
+      [name, email, hashedPassword],
     );
 
     res.status(201).json({
