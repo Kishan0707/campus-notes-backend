@@ -1,7 +1,7 @@
 import express from "express";
 import pool from "../config/postgres.js";
 import bcrypt from "bcrypt";
-import { verifyToken } from "../models/middlewares/authMiddleware.js";
+import verfiyToken from "../models/middlewares/authMiddleware.js";
 
 const router = express.Router();
 
@@ -12,7 +12,7 @@ router.get("/profile/:id", async (req, res) => {
       "SELECT id, username, email FROM users WHERE id = $1",
       [id],
     );
-    if (result.rows.length === 0) {
+    if (user.rows.length === 0) {
       return res.status(404).json({ message: "User not found" });
     }
     res.json(result.rows[0]);
@@ -21,7 +21,7 @@ router.get("/profile/:id", async (req, res) => {
   }
 });
 
-router.put("/profile/:id", verifyToken, async (req, res) => {
+router.put("/profile/:id", verfiyToken, async () => {
   try {
     const { name, email } = req.body;
     const { id } = req.params;
@@ -35,7 +35,7 @@ router.put("/profile/:id", verifyToken, async (req, res) => {
     return res.status(500).json({ message: "Server error", err });
   }
 });
-router.put("/profile/change-passwprd/:id", verifyToken, async (req, res) => {
+router.put("/profile/change-passwprd/:id", verfiyToken, async (req, res) => {
   try {
     const { id } = req.params;
     const { oldPassword, newPassword } = req.body;
